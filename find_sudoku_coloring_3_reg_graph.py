@@ -12,6 +12,7 @@ def f(config,color):
 def generate_iterations_for_loop(onlyBalanced: bool, colors: list, numNodes: int, balancedThreshold=3):
     iter = []
     color_configurations = itertools.product(colors, repeat=numNodes)
+    print("Generating efficient set of color configurations")
     for config in tqdm(color_configurations, total = len(colors)**numNodes):
         if onlyBalanced:
             if f(config,0) <= f(config,1) <= f(config,2) and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold:
@@ -30,6 +31,7 @@ def find_coloring_3_reg_graph(G,H,onlyBalanced=True):
 
     best_coloring_uncolored = float('inf')
 
+    print("Finding (closest) Sudoku coloring")
     for config in tqdm(iter):
         color_assignment = dict(zip(nodes, config))
         #print(color_assignment)
