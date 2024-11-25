@@ -25,3 +25,6 @@ The sudoku number refers to the minimum number of nodes of a graph that need to 
 3. **Find Sudoku Number**:
    - Compute efficient iterator.
    - Brute force loop over iterator.
+
+4. **Parallelized find Sudoku Number**:
+   - Parallelized version to increase performance

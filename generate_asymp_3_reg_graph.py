@@ -3,6 +3,9 @@ import random
 import matplotlib.pyplot as plt
 
 def create_random_3_reg_graph(n) -> nx.Graph:
+    if n % 2 != 0:
+        raise ValueError("n must be even")
+
     # Create a Hamiltonian cycle
     hamiltonian_cycle = nx.cycle_graph(n)
     G = hamiltonian_cycle.copy()
