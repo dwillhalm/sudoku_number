@@ -14,22 +14,22 @@ def f(config,color):
     return index
 
 
-def generate_iterations_for_loop(onlyBalanced: bool, colors: list, numNodes: int, balancedThreshold=3):
+def generate_iterations_for_loop(onlyBalanced: bool, colors: list, numNodes: int, balancedThreshold=4):
     iter = []
     color_configurations = product(colors, repeat=numNodes)
     print("Generating efficient set of color configurations")
     for config in tqdm(color_configurations, total = len(colors)**numNodes):
         if onlyBalanced:
-            if f(config,0) <= f(config,1) <= f(config,2) and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold:
+            if abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and abs(config.count(0)-numNodes/len(colors)) <= balancedThreshold and f(config,0) <= f(config,1) <= f(config,2):
                 iter.append(config)
         else:
-            if f(config,0) <= f(config,1) <= f(config,2) and 0 in config and 1 in config and 2 in config:
+            if 0 in config and 1 in config and 2 in config and f(config,0) <= f(config,1) <= f(config,2):
                 iter.append(config)
     return iter
 
 
 # G is the original graph, H is the decycled graph
-def sudoku_coloring_worker(config_batch, nodes, G, H, progress_queue, update_frequency=1000):
+def sudoku_coloring_worker(config_batch, nodes, G, H, progress_queue, update_frequency=10000):
     best_coloring_uncolored = float('inf')
     best_coloring = None
     best_sudoku_coloring = None

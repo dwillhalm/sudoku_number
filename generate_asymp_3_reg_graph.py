@@ -1,6 +1,7 @@
 import networkx as nx
 import random
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 def create_random_3_reg_graph(n) -> nx.Graph:
     if n % 2 != 0:
@@ -12,6 +13,8 @@ def create_random_3_reg_graph(n) -> nx.Graph:
 
     # Create a list of unmatched nodes
     unmatched_nodes = list(range(n))
+
+    progress_bar = tqdm(total=n, leave=False)
 
     # Randomly match the nodes
     while len(unmatched_nodes) > 1:
@@ -25,14 +28,17 @@ def create_random_3_reg_graph(n) -> nx.Graph:
             G.add_edge(node1, node2)
             unmatched_nodes.remove(node1)
             unmatched_nodes.remove(node2)
+            progress_bar.update(2)
 
         if len(unmatched_nodes) == 2 and G.has_edge(unmatched_nodes[0], unmatched_nodes[1]):
             G = hamiltonian_cycle.copy()
             unmatched_nodes = list(range(n))
+            progress_bar.reset()
+
     return G
 
 if __name__ == "__main__":
-    n = 52
+    n = 1000
     G = create_random_3_reg_graph(n)
     print(G)
 
